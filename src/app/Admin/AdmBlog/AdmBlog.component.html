@@ -1,0 +1,48 @@
+
+<h3><a routerLink="create" >Add Blog</a></h3>
+
+<table class="number-table">
+  <caption class="readable-hidden">//////</caption>
+  <colgroup>
+      <col width="25%"> 
+      <col style="width:25%;">
+      <col class="table-cell-1of4" span="2"> 
+  </colgroup>
+  <thead>
+      <tr>
+          <th scope="col">ID</th>
+          <th scope="col">title</th>
+          <th scope="col">date</th>
+          <th scope="col">imageUrl</th>
+          
+          <th scope="col">langId</th>
+          <th scope="col">originalId</th>
+          <th scope="col">operation</th>
+          
+      </tr>
+  </thead>
+  <tbody *ngFor="let blog of blogList" >
+      <tr>
+          
+          <td>{{blog.id}}</td>
+          <td>{{blog.title}}</td>
+          <td>{{blog.date}}</td>
+          <td>{{blog.imageUrl}}</td>
+         
+          <td>{{blog.langId}}</td>
+          <td>{{blog.originalId}}</td>
+          <td>  
+                <button class="btn btn-success" (click)="viewBlog(blog)" style="margin-left: 20px;"> View</button>
+                <button class="btn btn-success" (click)="editBlog(blog)" style="margin-left: 20px;"> Edit</button>
+                <button class="btn btn-success" (click)="deleteBlog(blog)"> Delete</button>
+           </td>
+      </tr>
+      
+  </tbody>
+  <!-- <tfoot>
+      <tr>
+          
+          <td>85</td><td>90</td><td>85</td>
+      </tr>
+  </tfoot> -->
+</table>

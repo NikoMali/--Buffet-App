@@ -1,0 +1,17 @@
+{
+    "demo": {
+        "title": "Translation demo",
+        "text": "This is a simple demonstration app for ngx-translate"
+    },
+    "header": {
+        "home": "Home",
+        "about": "About",
+        "blog":"Blog",
+        "gallery":"Gallery",
+        "contacts":"Contacts"
+    },
+    "logo": {
+        "name":"Nino`s",
+        "underName":"Services"
+    }
+}

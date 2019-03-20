@@ -1,0 +1,55 @@
+.number-table {
+    font-size: 12px;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #CCC;
+    color: black;
+    th,
+    td {
+        padding: 6px 10px;
+        border-top: 1px solid #CCC;
+        border-left: 1px solid #CCC;
+        &:first-child {
+          border-left: 0 none;
+        }
+    }
+    th {
+        text-align: center;
+        font-weight: normal;
+        background: #eee;
+        color: black;
+    }
+    tfoot {
+        th,
+        td {
+            border-top: 2px solid #ccc;
+        }
+    }
+}
+
+.table-cell {
+    @for $i from 1 through 10 {
+        &-1of#{$i} {
+          width: percentage(1/$i);
+        }
+    }
+
+    &-3of5 { width: 60%; }
+    &-2of3 { width: 66.66%; }
+    &-3of4 { width: 75%; }
+    &-4of5 { width: 80%; }
+    &-5of6 { width: 83.33%; }
+}
+
+.readable-hidden {  
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px); // for IE6, IE7
+    clip: rect(1px, 1px, 1px, 1px);
+}
+tr:nth-child(even) {
+    background-color: #dddddd;
+    
+  }

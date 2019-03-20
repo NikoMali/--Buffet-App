@@ -1,0 +1,17 @@
+{
+    "demo": {
+        "title": "Translation demo",
+        "text": "This is a simple demonstration app for ngx-translate"
+    },
+    "header": {
+        "home": "მთავარი",
+        "about": "ჩვენს შესახებ",
+        "blog":"ბლოგი",
+        "gallery":"გალერია",
+        "contacts":"საკონტაქტო"
+    },
+    "logo": {
+        "name":"ნინოს",
+        "underName":"ფურშეტი"
+    }
+}
