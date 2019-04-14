@@ -1,0 +1,57 @@
+<h2>Login</h2>
+        <form [formGroup]="createBlogForm" (ngSubmit)="onSubmit()">
+            <div  class="form-group">
+                <label for="Title">Title</label>
+                <div [froalaEditor]="options" [(froalaModel)]="editorContent" formControlName="Title" class="ttt form-control" [ngClass]="{ 'is-invalid': submitted && f.Title.errors }"></div>
+                <!-- <input  type="text" formControlName="Title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Title.errors }" /> -->
+                <div *ngIf="submitted && f.Title.errors" class="invalid-feedback">
+                    <div *ngIf="f.Title.errors.required">Title is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="CreateDate">CreateDate</label>
+              <input type="text" formControlName="CreateDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.CreateDate.errors }" />
+              <div *ngIf="submitted && f.CreateDate.errors" class="invalid-feedback">
+                  <div *ngIf="f.CreateDate.errors.required">CreateDate is required</div>
+              </div>
+          </div>
+        <div class="form-group">
+          <label for="ImgUrl">ImgUrl</label>
+          <img [src]="imageUrl"  style="width:250px;height:200px">
+          <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)"  class="form-control"  />
+
+        </div>
+        <div class="form-group">
+          <label for="ShortDesc">ShortDesc</label>
+          <input type="text" formControlName="ShortDesc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ShortDesc.errors }" />
+          <div *ngIf="submitted && f.ShortDesc.errors" class="invalid-feedback">
+              <div *ngIf="f.ShortDesc.errors.required">shortDesc is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="LongDesc">LongDesc</label>
+          <input type="text" formControlName="LongDesc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.LongDesc.errors }" />
+          <div *ngIf="submitted && f.LongDesc.errors" class="invalid-feedback">
+              <div *ngIf="f.LongDesc.errors.required">LongDesc is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="LangId">LangId</label>
+          <input type="text" formControlName="LangId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.LangId.errors }" />
+          <div *ngIf="submitted && f.LangId.errors" class="invalid-feedback">
+              <div *ngIf="f.LangId.errors.required">LangId is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="OriginalPostId">OriginalPostId</label>
+          <input type="text" formControlName="OriginalPostId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.OriginalPostId.errors }" />
+          <div *ngIf="submitted && f.OriginalPostId.errors" class="invalid-feedback">
+              <div *ngIf="f.OriginalPostId.errors.required">OriginalPostId is required</div>
+          </div>
+        </div>
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary">Create</button>
+                <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>
+            <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+        </form>
