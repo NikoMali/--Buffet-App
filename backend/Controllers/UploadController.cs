@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace BuffetApi.Controllers
 {
@@ -97,7 +98,8 @@ namespace BuffetApi.Controllers
             try
             {
                 var file = Request.Form.Files[0];
-                var folderName = Path.Combine("Uploads", "Images");
+                string webRootPath = _hostingEnvironment.WebRootPath;
+                var folderName = Path.Combine(webRootPath, "Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
 
                 if (file.Length > 0)
@@ -122,6 +124,52 @@ namespace BuffetApi.Controllers
             {
                 return StatusCode(500, "Internal server error");
             }
+        }
+        [HttpGet("LoadImages")]
+         public ActionResult LoadImages()
+        {
+            string[] listFiles = Directory.GetFiles(Path.Combine(_hostingEnvironment.WebRootPath, "uploads"));
+            List<object> jsonListFiles = new List<object>();
+
+            foreach (var item in listFiles)
+            {
+                var fileName = item.Substring(item.LastIndexOf("\\") + 1);
+                jsonListFiles.Add(new
+                {
+                    name = fileName,
+                    url = "http://localhost:4000/Uploads/"+fileName,
+                    thumb = "http://localhost:4000/Uploads/"+fileName,
+                    tag = "uploads"
+                });
+            }
+            //var jsonObj = JsonConvert.SerializeObject(jsonListFiles);
+            try
+            {
+                return Json(jsonListFiles);
+            }
+            catch (Exception e)
+            {
+                return Json(e);
+            }
+        }
+
+        [HttpDelete("DeleteImages")]
+         public ActionResult DeleteImages()
+        {
+            Microsoft.Extensions.Primitives.StringValues values;
+            var k = HttpContext.Request.Form.TryGetValue("name",out values); 
+            string getName = values[0];
+            string webRootPath = _hostingEnvironment.WebRootPath;
+
+            // Building the path to the uploads directory
+            var fileRoute = Path.Combine(webRootPath, "uploads");
+
+            string link = Path.Combine(fileRoute, getName);
+            if ((System.IO.File.Exists(link)))
+                {
+                    System.IO.File.Delete(link);
+                }
+            return Ok();
         }
 
         

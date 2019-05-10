@@ -32,8 +32,16 @@ export class CreateBlogComponent implements OnInit {
 
                               // Allow to upload PNG and JPG.
                               imageAllowedTypes: ['jpeg', 'jpg', 'png'],
-};
 
+                              imageManagerDeleteMethod: 'DELETE',
+
+                              //imageManagerDeleteParams: {name: 'my_editor'},
+
+                              imageManagerDeleteURL: 'http://localhost:4000/api/Upload/DeleteImages',
+
+                              imageManagerLoadParams: {id: 'my_editor'},
+                              imageManagerLoadURL: 'http://localhost:4000/api/Upload/LoadImages'
+};
     createBlogForm: FormGroup;
     loading = false;
     submitted = false;
@@ -63,8 +71,20 @@ export class CreateBlogComponent implements OnInit {
             LangId: ['', Validators.required],
             OriginalPostId: ['', Validators.required],
         });
-    }
 
+
+        setTimeout(() => {
+          var el = document.getElementById('imageRemove-1');
+          if(el){
+            console.log( el.addEventListener('click', this.displayDate));
+          }
+          console.log(el);
+        }, 1200);
+    }
+    displayDate() {
+
+      return console.log('work');
+    }
     // convenience getter for easy access to form fields
     get f() {
       return this.createBlogForm.controls; }
