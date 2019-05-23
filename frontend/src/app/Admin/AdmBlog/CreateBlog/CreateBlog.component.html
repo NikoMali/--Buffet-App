@@ -1,57 +1,135 @@
-<h2>Login</h2>
-        <form [formGroup]="createBlogForm" (ngSubmit)="onSubmit()">
-            <div  class="form-group">
-                <label for="Title">Title</label>
-                <div [froalaEditor]="options" [(froalaModel)]="editorContent" formControlName="Title" class="ttt form-control" [ngClass]="{ 'is-invalid': submitted && f.Title.errors }"></div>
-                <!-- <input  type="text" formControlName="Title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Title.errors }" /> -->
-                <div *ngIf="submitted && f.Title.errors" class="invalid-feedback">
-                    <div *ngIf="f.Title.errors.required">Title is required</div>
-                </div>
-            </div>
-            <div class="form-group">
-              <label for="CreateDate">CreateDate</label>
-              <input type="text" formControlName="CreateDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.CreateDate.errors }" />
-              <div *ngIf="submitted && f.CreateDate.errors" class="invalid-feedback">
-                  <div *ngIf="f.CreateDate.errors.required">CreateDate is required</div>
-              </div>
-          </div>
-        <div class="form-group">
-          <label for="ImgUrl">ImgUrl</label>
-          <img [src]="imageUrl"  style="width:250px;height:200px">
-          <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)"  class="form-control"  />
 
+
+       <!-- <tabset>
+        <tab *ngFor="let tabz of tabs"[heading]="tabz.title">{{tabz.title}}</tab>
+      </tabset> -->
+      <!-- <button type="button" class="btn btn-primary" (click)="openModalWithComponent()">Create modal with component</button>
+      <button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button>
+
+      <ng-template #template>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Modal</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div class="form-group">
-          <label for="ShortDesc">ShortDesc</label>
-          <input type="text" formControlName="ShortDesc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ShortDesc.errors }" />
-          <div *ngIf="submitted && f.ShortDesc.errors" class="invalid-feedback">
-              <div *ngIf="f.ShortDesc.errors.required">shortDesc is required</div>
-          </div>
+        <div class="modal-body">
+          This is a modal.
         </div>
-        <div class="form-group">
-          <label for="LongDesc">LongDesc</label>
-          <input type="text" formControlName="LongDesc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.LongDesc.errors }" />
-          <div *ngIf="submitted && f.LongDesc.errors" class="invalid-feedback">
-              <div *ngIf="f.LongDesc.errors.required">LongDesc is required</div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="LangId">LangId</label>
-          <input type="text" formControlName="LangId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.LangId.errors }" />
-          <div *ngIf="submitted && f.LangId.errors" class="invalid-feedback">
-              <div *ngIf="f.LangId.errors.required">LangId is required</div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="OriginalPostId">OriginalPostId</label>
-          <input type="text" formControlName="OriginalPostId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.OriginalPostId.errors }" />
-          <div *ngIf="submitted && f.OriginalPostId.errors" class="invalid-feedback">
-              <div *ngIf="f.OriginalPostId.errors.required">OriginalPostId is required</div>
-          </div>
-        </div>
+      </ng-template> -->
+     <!-- Trigger/Open The Modal -->
+<button id="myBtn" (click)="modalOpen()">Open Modal</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span (click)="modalClose()" class="close">&times;</span>
+      <h2>Modal Header</h2>
+    </div>
+    <div class="modal-body">
+          <form [formGroup]="selectLang">
             <div class="form-group">
-                <button [disabled]="loading" class="btn btn-primary">Create</button>
-                <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+              <label for="exampleFormControlSelect1">select lang</label>
+              <select formControlName="lang" class="form-control" id="exampleFormControlSelect1">
+                <option *ngFor="let tabz of tabs">{{tabz.title}}</option>
+              </select>
             </div>
-            <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-        </form>
+            <button type="submit" class="btn btn-primary btn-sm" (click)="addNewTab()">
+                Add new tab
+            </button>
+          </form>
+    </div>
+    <div class="modal-footer">
+      <h3>Modal Footer</h3>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+      <form id="createBlogForm" [formGroup]="createBlogForm" (ngSubmit)="onSubmit()">
+        <div formArrayName="items">
+
+
+          <tabset>
+            <tab *ngFor="let tabz of tabs; let i = index;"
+            [heading]="tabz.title"
+            [removable]="tabz.removable"
+            (removed)="removeTabHandler(tabz)"
+            >
+                <div [formGroupName]="i">
+
+
+
+                  <div  class="form-group">
+                      <label for="Title">Title</label>
+                      <div [froalaEditor]="options" formControlName="Title" class="ttt form-control" [ngClass]="{ 'is-invalid': submitted && f[0]['controls'].Title.errors }"></div>
+                      <!-- <input  type="text" formControlName="Title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f[0]['controls'].Title.errors }" /> -->
+                      <div *ngIf="submitted && f[0]['controls'].Title.errors" class="invalid-feedback">
+                        <div *ngIf="f[0]['controls'].Title.errors.required">Title is required</div>
+                      </div>
+                    </div>
+                  <div class="form-group">
+                    <label for="CreateDate">CreateDate</label>
+                    <input type="text" formControlName="CreateDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f[0]['controls'].CreateDate.errors }" />
+                    <div *ngIf="submitted && f[0]['controls'].CreateDate.errors" class="invalid-feedback">
+                        <div *ngIf="f[0]['controls'].CreateDate.errors.required">CreateDate is required</div>
+                    </div>
+                </div>
+              <div class="form-group">
+                <label for="ImgUrl">ImgUrl</label>
+                <img [src]="imageUrl"  style="width:250px;height:200px">
+                <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)"  class="form-control"  />
+
+              </div>
+              <div class="form-group">
+                <label for="ShortDesc">ShortDesc</label>
+                <input type="text" formControlName="ShortDesc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f[0]['controls'].ShortDesc.errors }" />
+                <div *ngIf="submitted && f[0]['controls'].ShortDesc.errors" class="invalid-feedback">
+                    <div *ngIf="f[0]['controls'].ShortDesc.errors.required">shortDesc is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="LongDesc">LongDesc</label>
+                <input type="text" formControlName="LongDesc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f[0]['controls'].LongDesc.errors }" />
+                <div *ngIf="submitted && f[0]['controls'].LongDesc.errors" class="invalid-feedback">
+                    <div *ngIf="f[0]['controls'].LongDesc.errors.required">LongDesc is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="LangId">LangId</label>
+                <input type="text" formControlName="LangId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f[0]['controls'].LangId.errors }" />
+                <div *ngIf="submitted && f[0]['controls'].LangId.errors" class="invalid-feedback">
+                    <div *ngIf="f[0]['controls'].LangId.errors.required">LangId is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="OriginalPostId">OriginalPostId</label>
+                <input type="text" formControlName="OriginalPostId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f[0]['controls'].OriginalPostId.errors }" />
+                <div *ngIf="submitted && f[0]['controls'].OriginalPostId.errors" class="invalid-feedback">
+                    <div *ngIf="f[0]['controls'].OriginalPostId.errors.required">OriginalPostId is required</div>
+                </div>
+              </div>
+            </div>
+            </tab>
+          </tabset>
+
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <br>
+
+      </div>
+    </form>
+    <div class="json">{{createBlogForm.value | json}}</div>
+              <div class="form-group">
+                  <button form="createBlogForm" [disabled]="loading" class="btn btn-primary">Create</button>
+                  <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+              </div>
+              <div *ngIf="error" class="alert alert-danger">{{error}}</div>

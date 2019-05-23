@@ -40,6 +40,9 @@ import { CreateBlogComponent } from './Admin/AdmBlog/CreateBlog/CreateBlog.compo
 import { EditBlogComponent } from './Admin/AdmBlog/EditBlog/EditBlog.component';
 import { UploadImegeService } from './_services/uploadImege.service';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalContentComponent } from './_Layouts/modal-content/modal-content.component';
 
 
 // AoT requires an exported function for factories
@@ -74,7 +77,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       AdmMenuComponent,
       AdmSlideComponent,
       CreateBlogComponent,
-      EditBlogComponent
+      EditBlogComponent,
+      ModalContentComponent
    ],
    imports: [
       BrowserModule,
@@ -89,7 +93,9 @@ export function HttpLoaderFactory(http: HttpClient) {
       HttpClientModule,
       ReactiveFormsModule,
       FroalaEditorModule.forRoot(),
-      FroalaViewModule.forRoot()
+      FroalaViewModule.forRoot(),
+      TabsModule.forRoot(),
+      ModalModule.forRoot()
    ],
    providers: [
       { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
@@ -104,6 +110,7 @@ export function HttpLoaderFactory(http: HttpClient) {
    ],
    bootstrap: [
       AppComponent
-   ]
+   ],
+   entryComponents: [ModalContentComponent]
 })
 export class AppModule { }
